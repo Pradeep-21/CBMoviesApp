@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoviesCategoryTableViewCell" id="KGk-i7-Jjw" customClass="MoviesCategoryTableViewCell" customModule="CBMoviesApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MyR-zv-aZg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMM-2w-lFh">
+                                <rect key="frame" x="139" y="10" width="42" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TMM-2w-lFh" firstAttribute="centerY" secondItem="MyR-zv-aZg" secondAttribute="centerY" id="2Oq-tm-Ybp"/>
+                            <constraint firstAttribute="bottom" secondItem="TMM-2w-lFh" secondAttribute="bottom" constant="10" id="3jS-6j-xnj"/>
+                            <constraint firstItem="TMM-2w-lFh" firstAttribute="top" secondItem="MyR-zv-aZg" secondAttribute="top" constant="10" id="eQF-5J-4dW"/>
+                            <constraint firstItem="TMM-2w-lFh" firstAttribute="centerX" secondItem="MyR-zv-aZg" secondAttribute="centerX" id="sbj-9P-6CR"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="MyR-zv-aZg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6vc-bp-GBh"/>
+                    <constraint firstItem="MyR-zv-aZg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="AJa-wp-WBm"/>
+                    <constraint firstAttribute="bottom" secondItem="MyR-zv-aZg" secondAttribute="bottom" id="O07-84-fTp"/>
+                    <constraint firstAttribute="trailing" secondItem="MyR-zv-aZg" secondAttribute="trailing" id="rEW-gx-Y3a"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryNameLabel" destination="TMM-2w-lFh" id="Lqs-wk-s7T"/>
+            </connections>
+            <point key="canvasLocation" x="99.236641221374043" y="20.422535211267608"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

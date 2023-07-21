@@ -85,45 +85,17 @@ enum TypeEnum: String, Codable {
 }
 
 
-enum CBMovieCategory: String {
-    case Year = "Year"
-    case 
+enum CBMovieCategory: String, CaseIterable {
+    case year = "Year"
+    case genre = "Genre"
+    case directer = "directer"
+    case actor = "Actor"
+    case allMovies = "All Movies"
 }
 
 typealias Welcome = [CBMovies]
 
-func chekc() {
-    let movies = [CBMovies]()
-    
-    // Create a dictionary to hold the sections
-    var sections: [String: [CBMovies]] = [:]
-    
-    // Group the movies by the desired key (e.g., genre, director, type)
-    sections = Dictionary(grouping: movies, by: { $0.genre ?? "" }) // Replace "genre" with the desired key
-    
-    var years: [String?] = ["2000", "2002"]
-    
-    for movie in movies {
-        years.append(movie.year)
-    }
-    var moviewgeners: [String?] = []
-    for movie in movies {
-        let gener = movie.genre
-        let geners = gener?.split(separator: ",")
-        for g in geners {
-            moviewgeners.append(g)
-        }
-    }
-    
-    Set(years)
-    
-    var sectionArray: [Section] = []
 
-    for (key, value) in sections {
-        sectionArray.append(Section(title: key, items: value))
-    }
-
-}
 
 struct Section {
     let title: String?
@@ -133,8 +105,8 @@ struct Section {
 
 class CBMoviesModel: CBMoviesModelProtocol {
     
-    func getMoviesDetails() -> [CBMovies] {
-        
+    func getMoviesDetails() -> [CBMovies]? {
+        return fetchMoviesFromData()
     }
  
     private func fetchDataFromJson () -> Data? {

@@ -7,64 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4A387E75-7E47-4102-8DCB-8ECDE8CD1463"
+            uuid = "21B74099-4EA7-414A-9201-83C8D19B6A58"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CBMoviesApp/ViewController/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "test()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4A387E75-7E47-4102-8DCB-8ECDE8CD1463 - 5667b2522b4771a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CBMoviesApp.ViewController.test() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
-                  moduleName = "CBMoviesApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pradeep.selvaraj/Documents%20/CBMoviesApp/CBMoviesApp/CBMoviesApp/ViewController/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "144">
-               </Location>
-               <Location
-                  uuid = "4A387E75-7E47-4102-8DCB-8ECDE8CD1463 - 5667b2522b4771a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CBMoviesApp.ViewController.test() -&gt; Swift.Optional&lt;Foundation.Data&gt;"
-                  moduleName = "CBMoviesApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pradeep.selvaraj/Documents%20/CBMoviesApp/CBMoviesApp/CBMoviesApp/ViewController/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "384">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D5742B74-AFFF-4030-982E-C00068FE5E0B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CBMoviesApp/ViewController/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "json()"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
