@@ -8,10 +8,10 @@
 import Foundation
 
 class CBMoviesListViewModel {
-    var searchedMovies: [CBMovies]?
+    var filteredMovies: [CBMovies]?
     
     func fetchSubMovieList(from movies: [CBMovies]?, with selectedText: String?, text: String?) {
-        searchedMovies = movies?.filter({ movie in
+        filteredMovies = movies?.filter({ movie in
             switch selectedText {
             case "Actor":
                 return CBHelper.isStringContainingValue(movie.actors ?? "", text ?? "")

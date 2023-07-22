@@ -35,14 +35,14 @@ class CBMoviesListViewController: UIViewController {
 
 extension CBMoviesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.searchedMovies?.count ?? 0
+        viewModel.filteredMovies?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesTableViewCell.self), for: indexPath) as? MoviesTableViewCell else {
             return UITableViewCell()
         }
-        guard let movie = viewModel.searchedMovies?[indexPath.row] else {
+        guard let movie = viewModel.filteredMovies?[indexPath.row] else {
             return UITableViewCell()
         }
         cell.customUI(movie: movie)
@@ -58,7 +58,7 @@ extension CBMoviesListViewController: UITableViewDataSource {
 extension CBMoviesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMovieDetailsViewController.self)) as? CBMovieDetailsViewController else { return }
-        viewController.movie = viewModel.searchedMovies?[indexPath.row]
+        viewController.movie = viewModel.filteredMovies?[indexPath.row]
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

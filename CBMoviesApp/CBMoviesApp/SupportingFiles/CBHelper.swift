@@ -18,4 +18,24 @@ class CBHelper {
         return UIImage(named: "defaultImage")
     }
     
+    // Generic function to extract unique strings from comma-separated strings
+    class func extractUniqueValues<T>(from items: [CBMovies], keyPath: KeyPath<CBMovies, String?>) -> [T] where T: Hashable, T: LosslessStringConvertible {
+        var uniqueValues = Set<String>()
+        for movie in items {
+            if let value = movie[keyPath: keyPath] {
+                let components = value.split(separator: ",")
+                uniqueValues.formUnion(components.lazy.map { $0.trimmingCharacters(in: .whitespaces) })
+            }
+        }
+        return uniqueValues.compactMap { T($0) }
+    }
+    
+    class func configureSearchIcon() -> UIView? {
+        let imageView = UIImageView(frame: CGRect(x: 5, y: 10, width: 30, height: 20))
+        imageView.image = UIImage(systemName: "magnifyingglass")
+        let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 40, height: 40))
+        imageView.tintColor = .gray
+        imageContainerView.addSubview(imageView)
+        return imageContainerView
+    }
 }

@@ -9,7 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak private var emptyDataLabel: UILabel!
+    @IBOutlet weak private var searchTextField: UITextField!
     @IBOutlet weak private var moviesTypesTableView: UITableView!
     
     let viewModel = CBMoviesViewModel(model: CBMoviesModel())
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addBinding()
         registerNibCell()
         viewModel.getMoviesDetails()
         customiseUI()
@@ -27,13 +29,28 @@ class ViewController: UIViewController {
     // MARK: - Custom methods
     
     private func customiseUI() {
-        searchTextField.leftView = configureSearchIcon()
+        searchTextField.leftView = CBHelper.configureSearchIcon()
         searchTextField.leftViewMode = .always
         searchTextField.layer.cornerRadius = 10
         searchTextField.tintColor = .lightText
         searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
-        searchTextField.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 240 / 255, alpha: 1)
-        searchTextField.tintColor = UIColor(red: 149 / 255, green: 149 / 255, blue: 152 / 255, alpha: 1)
+        searchTextField.backgroundColor = .CBSearchTextBackground
+        searchTextField.tintColor = .CCSearchTextTint
+    }
+    
+    private func addBinding() {
+        viewModel.movieSections.bind { [weak self] movie in
+            guard let self else { return }
+            self.emptyDataLabel.isHidden = !(movie?.isEmpty ?? true)
+            self.reloadTableView()
+        }
+    }
+    
+    private func reloadTableView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.moviesTypesTableView.reloadData()
+        }
     }
     
     private func registerNibCell() {
@@ -78,7 +95,7 @@ class ViewController: UIViewController {
         guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMoviesListViewController.self)) as? CBMoviesListViewController else { return }
         viewController.subCategoryMovie = subCategory
         viewController.text = text
-        viewController.allMovies = viewModel.moviesArray
+        viewController.allMovies = viewModel.allMovies
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -86,16 +103,16 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if viewModel.isSearch {
-            moveToMovieDetailsViewController(movie: viewModel.searchedMovies?[indexPath.row], posterImage: UIImage())
+            moveToMovieDetailsViewController(movie: viewModel.filteredMovies.value?[indexPath.row], posterImage: UIImage())
         } else if indexPath.row == 0 {
                 tableView.deselectRow(at: indexPath, animated: true)
-                viewModel.array?[indexPath.section].isOpened?.toggle()
+            viewModel.movieSections.value?[indexPath.section].isOpened?.toggle()
                 moviesTypesTableView.reloadSections([indexPath.section], with: .none)
-        } else if indexPath.section == (viewModel.array?.count ?? 0) - 1 {
-            moveToMovieDetailsViewController(movie: viewModel.moviesArray?[indexPath.row], posterImage: UIImage())
+        } else if indexPath.section == (viewModel.movieSections.value?.count ?? 0) - 1 {
+            moveToMovieDetailsViewController(movie: viewModel.allMovies?[indexPath.row], posterImage: UIImage())
         } else {
-            let text = viewModel.array?[indexPath.section].subCategory?[indexPath.row]
-            let category = viewModel.array?[indexPath.section].category
+            let text = viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row]
+            let category = viewModel.movieSections.value?[indexPath.section].category
             moveToMoviesListViewController(subCategory: category, text: text)
         }
     }
@@ -106,17 +123,17 @@ extension ViewController: UITableViewDataSource {
         if viewModel.isSearch {
             return 1
         } else {
-            return viewModel.array?.count ?? 0
+            return viewModel.movieSections.value?.count ?? 0
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.isSearch {
-            return viewModel.searchedMovies?.count ?? 0
+            return viewModel.filteredMovies.value?.count ?? 0
         } else {
-            let section = viewModel.array?[section]
+            let section = viewModel.movieSections.value?[section]
             if section?.isOpened == true {
                 if section?.category == CBMovieCategory.allMovies.rawValue {
-                    return viewModel.moviesArray?.count ?? 0
+                    return viewModel.allMovies?.count ?? 0
                 } else {
                     return (section?.subCategory?.count ?? 0)
                 }
@@ -132,11 +149,11 @@ extension ViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             if indexPath.row == 0 {
-                cell.customise(categoryText: viewModel.array?[indexPath.section].category, isSection: true)
+                cell.customise(categoryText: viewModel.movieSections.value?[indexPath.section].category, isSection: true)
             } else {
-                cell.customise(categoryText: viewModel.array?[indexPath.section].subCategory?[indexPath.row])
+                cell.customise(categoryText: viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row])
             }
-            if viewModel.array?[indexPath.section].isOpened ?? false {
+            if viewModel.movieSections.value?[indexPath.section].isOpened ?? false {
                 cell.expandButton.setImage(UIImage(systemName: "arrow.up.circle"), for: .normal)
             } else {
                 cell.expandButton.setImage(UIImage(systemName: "arrow.down.circle"), for: .normal)
@@ -146,7 +163,7 @@ extension ViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesTableViewCell.self), for: indexPath) as? MoviesTableViewCell else {
                 return UITableViewCell()
             }
-            guard let movie = (CBMovieCategory.allCases.count - 1) == indexPath.section ? viewModel.moviesArray?[indexPath.row]: viewModel.searchedMovies?[indexPath.row] else {
+            guard let movie = (CBMovieCategory.allCases.count - 1) == indexPath.section ? viewModel.allMovies?[indexPath.row]: viewModel.filteredMovies.value?[indexPath.row] else {
                 return UITableViewCell()
             }
             cell.customUI(movie: movie)
@@ -161,14 +178,5 @@ extension ViewController: UITableViewDataSource {
             return 44
         }
     }
-}
-
-func configureSearchIcon() -> UIView? {
-    let imageView = UIImageView(frame: CGRect(x: 5, y: 10, width: 30, height: 20))
-    imageView.image = UIImage(systemName: "magnifyingglass")
-    let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 40, height: 40))
-    imageView.tintColor = .gray
-    imageContainerView.addSubview(imageView)
-    return imageContainerView
 }
 

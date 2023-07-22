@@ -9,6 +9,7 @@
 import Foundation
 
 // MARK: - CBMovies
+
 struct CBMovies: Codable {
     let title, year, rated, released: String?
     let runtime, genre, director, writer: String?
@@ -84,15 +85,7 @@ enum TypeEnum: String, Codable {
     case series = "series"
 }
 
-typealias Welcome = [CBMovies]
-
-
-
-struct Section {
-    let title: String?
-    let items: [CBMovies]?
-}
-
+// MARK: - Class Model
 
 class CBMoviesModel: CBMoviesModelProtocol {
     
@@ -102,30 +95,29 @@ class CBMoviesModel: CBMoviesModelProtocol {
  
     private func fetchDataFromJson () -> Data? {
         guard let path = Bundle.main.path(forResource: "Movies", ofType: "json") else {
-            fatalError("Movies.json not found in the app bundle.")
+            print("🥶🥶 Movies.json not found in the app bundle.")
+            return nil
         }
 
         do {
             let url = URL(fileURLWithPath: path)
             let jsonData = try Data(contentsOf: url)
-            // Now, you have the JSON data in the 'jsonData' variable.
             return jsonData
         } catch {
-            fatalError("Error loading JSON data: \(error)")
+            print("Error loading JSON data: \(error)")
         }
-
+        return nil
     }
     
+    // In this we have the JSON data deserialized into the 'movie' instance of your model class.
     private func fetchMoviesFromData() -> [CBMovies]? {
         guard let jsonData = fetchDataFromJson() else { return nil }
         do {
             let decoder = JSONDecoder()
             let movies = try decoder.decode([CBMovies].self, from: jsonData)
-            // Now, you have the JSON data deserialized into the 'movie' instance of your model class.
             return movies
         } catch {
             fatalError("Error decoding JSON data: \(error)")
         }
     }
-    
 }

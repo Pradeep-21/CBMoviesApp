@@ -11,92 +11,77 @@ protocol CBMoviesModelProtocol {
     func getMoviesDetails() -> [CBMovies]?
 }
 
-struct Model {
+struct MovieSection {
     var category: String?
     var subCategory: [String]?
     var isOpened: Bool?
 }
 
 class CBMoviesViewModel {
-    
     var model: CBMoviesModelProtocol?
-    var moviesArray: [CBMovies]?
-    var array: [Model]?
-    var searchedMovies: [CBMovies]?
+    
+    var allMovies: [CBMovies]?
+    var movieSections = CCObservable<[MovieSection]>()
+    var filteredMovies = CCObservable<[CBMovies]>()
     var isSearch: Bool = false
-    var isExpand: Bool = false
+    
+    // MARK: - Init Methods
     
     init(model: CBMoviesModelProtocol) {
         self.model = model
     }
     
+    // MARK: - Custom Methods
+    
     func getMoviesDetails() {
-        moviesArray = model?.getMoviesDetails()
-        chekc()
+        allMovies = model?.getMoviesDetails()
+        updateMovieSectionDetails()
     }
     
-    private func chekc() {
+    private func updateMovieSectionDetails() {
+        var movies = [MovieSection]()
+        guard let allMovies else { return }
         
-        var model = [Model]()
-        guard let moviesArray else { return }
-        // Create a dictionary to hold the sections
-        
+        // Usage of years.
         var years = [String]()
-        for movie in moviesArray {
+        
+        allMovies.forEach { movie in
             years.append(movie.year ?? "")
         }
         years = Array(Set(years))
         
-        model.append(Model(category: CBMovieCategory.year.rawValue, subCategory: years, isOpened: false))
+        // Append the array of unique years in movies subCategory.
+        movies.append(MovieSection(category: CBMovieCategory.year.rawValue, subCategory: years, isOpened: false))
         
         // Usage for actors
-        let uniqueActorsArray: [String] = extractUniqueValues(from: moviesArray, keyPath: \.actors)
+        let uniqueActorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.actors)
         print(uniqueActorsArray)
-        model.append(Model(category: CBMovieCategory.actor.rawValue, subCategory: uniqueActorsArray, isOpened: false))
+        movies.append(MovieSection(category: CBMovieCategory.actor.rawValue, subCategory: uniqueActorsArray, isOpened: false))
 
         // Usage for directors
-        let uniqueDirectorsArray: [String] = extractUniqueValues(from: moviesArray, keyPath: \.director)
+        let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
         print(uniqueDirectorsArray)
-        model.append(Model(category: CBMovieCategory.directer.rawValue, subCategory: uniqueDirectorsArray, isOpened: false))
+        movies.append(MovieSection(category: CBMovieCategory.directer.rawValue, subCategory: uniqueDirectorsArray, isOpened: false))
 
         // Usage for genres
-        let uniqueGenresArray: [String] = extractUniqueValues(from: moviesArray, keyPath: \.genre)
+        let uniqueGenresArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.genre)
         print(uniqueGenresArray)
-        model.append(Model(category: CBMovieCategory.genre.rawValue, subCategory: uniqueGenresArray, isOpened: false))
+        movies.append(MovieSection(category: CBMovieCategory.genre.rawValue, subCategory: uniqueGenresArray, isOpened: false))
 
-        model.append(Model(category: CBMovieCategory.allMovies.rawValue, subCategory: [], isOpened: false))
+        // Append the All Movies section also.
+        movies.append(MovieSection(category: CBMovieCategory.allMovies.rawValue, subCategory: [], isOpened: false))
         
-        array = model
+        movieSections.value = movies
     }
     
     func searchMovies(from searchText: String) {
-        searchedMovies = moviesArray?.filter({ movie in
-            let isTitleMatch = isStringContainingValue(movie.title ?? "", searchText)
-            let isGenreMatch = isStringContainingValue(movie.genre ?? "", searchText)
-            let isActorMatch = isStringContainingValue(movie.actors ?? "", searchText)
-            let isDirectedMatch = isStringContainingValue(movie.director ?? "", searchText)
+        filteredMovies.value = allMovies?.filter({ movie in
+            let isTitleMatch = CBHelper.isStringContainingValue(movie.title ?? "", searchText)
+            let isGenreMatch = CBHelper.isStringContainingValue(movie.genre ?? "", searchText)
+            let isActorMatch = CBHelper.isStringContainingValue(movie.actors ?? "", searchText)
+            let isDirectedMatch = CBHelper.isStringContainingValue(movie.director ?? "", searchText)
             return (isTitleMatch || isGenreMatch || isActorMatch || isDirectedMatch)
         })
     }
-    
-    func isStringContainingValue(_ targetString: String, _ desiredValue: String) -> Bool {
-        let components = targetString.components(separatedBy: ",")
-        return components.contains { $0.range(of: desiredValue, options: .caseInsensitive) != nil }
-    }
-}
-
-
-// Generic function to extract unique strings from comma-separated strings
-func extractUniqueValues<T>(from items: [CBMovies], keyPath: KeyPath<CBMovies, String?>) -> [T] where T: Hashable, T: LosslessStringConvertible {
-    var uniqueValues = Set<String>()
-    
-    for movie in items {
-        if let value = movie[keyPath: keyPath] {
-            let components = value.split(separator: ",")
-            uniqueValues.formUnion(components.lazy.map { $0.trimmingCharacters(in: .whitespaces) })
-        }
-    }
-    
-    return uniqueValues.compactMap { T($0) }
 }
 
