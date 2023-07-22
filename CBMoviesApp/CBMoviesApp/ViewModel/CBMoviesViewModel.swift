@@ -48,16 +48,15 @@ class CBMoviesViewModel {
         print(uniqueGenresArray)
         movies.append(MovieSection(category: CBMovieCategory.genre, subCategory: uniqueGenresArray, isOpened: false))
         
-        // Usage for directors
-        let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
-        
         // Usage for actors
         let uniqueActorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.actors)
         print(uniqueActorsArray)
         movies.append(MovieSection(category: CBMovieCategory.actor, subCategory: uniqueActorsArray, isOpened: false))
-
-        print(uniqueDirectorsArray)
+        
+        // Usage for directors
+        let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
         movies.append(MovieSection(category: CBMovieCategory.directer, subCategory: uniqueDirectorsArray, isOpened: false))
+        print(uniqueDirectorsArray)
 
         // Append the All Movies section also.
         movies.append(MovieSection(category: CBMovieCategory.allMovies, subCategory: [], isOpened: false))
