@@ -21,18 +21,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMM-2w-lFh">
-                                <rect key="frame" x="139" y="10" width="42" height="24"/>
+                                <rect key="frame" x="20" y="10" width="42" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piL-n4-JUa">
+                                <rect key="frame" x="290" y="14" width="15" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="be9-7k-WO5"/>
+                                    <constraint firstAttribute="height" constant="15" id="jS3-Xp-3UI"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="arrow.up.circle" catalog="system"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="TMM-2w-lFh" firstAttribute="centerY" secondItem="MyR-zv-aZg" secondAttribute="centerY" id="2Oq-tm-Ybp"/>
                             <constraint firstAttribute="bottom" secondItem="TMM-2w-lFh" secondAttribute="bottom" constant="10" id="3jS-6j-xnj"/>
+                            <constraint firstItem="piL-n4-JUa" firstAttribute="top" secondItem="MyR-zv-aZg" secondAttribute="top" constant="14" id="85g-Ea-ErF"/>
+                            <constraint firstAttribute="bottom" secondItem="piL-n4-JUa" secondAttribute="bottom" constant="15" id="UE0-Y2-GRc"/>
                             <constraint firstItem="TMM-2w-lFh" firstAttribute="top" secondItem="MyR-zv-aZg" secondAttribute="top" constant="10" id="eQF-5J-4dW"/>
-                            <constraint firstItem="TMM-2w-lFh" firstAttribute="centerX" secondItem="MyR-zv-aZg" secondAttribute="centerX" id="sbj-9P-6CR"/>
+                            <constraint firstItem="TMM-2w-lFh" firstAttribute="leading" secondItem="MyR-zv-aZg" secondAttribute="leading" constant="20" id="fy3-YO-Lbc"/>
+                            <constraint firstAttribute="trailing" secondItem="piL-n4-JUa" secondAttribute="trailing" constant="15" id="lee-KL-S5o"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -46,11 +58,13 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="categoryNameLabel" destination="TMM-2w-lFh" id="Lqs-wk-s7T"/>
+                <outlet property="expandButton" destination="piL-n4-JUa" id="K9V-wa-kDf"/>
             </connections>
             <point key="canvasLocation" x="99.236641221374043" y="20.422535211267608"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="arrow.up.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

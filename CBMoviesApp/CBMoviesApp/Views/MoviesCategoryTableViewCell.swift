@@ -9,6 +9,7 @@ import UIKit
 
 class MoviesCategoryTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak private var categoryNameLabel: UILabel!
     
     override func awakeFromNib() {

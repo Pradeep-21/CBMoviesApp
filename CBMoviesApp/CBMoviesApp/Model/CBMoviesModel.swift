@@ -84,15 +84,6 @@ enum TypeEnum: String, Codable {
     case series = "series"
 }
 
-
-enum CBMovieCategory: String, CaseIterable {
-    case year = "Year"
-    case genre = "Genre"
-    case directer = "directer"
-    case actor = "Actor"
-    case allMovies = "All Movies"
-}
-
 typealias Welcome = [CBMovies]
 
 

@@ -24,6 +24,7 @@ class CBMoviesViewModel {
     var array: [Model]?
     var searchedMovies: [CBMovies]?
     var isSearch: Bool = false
+    var isExpand: Bool = false
     
     init(model: CBMoviesModelProtocol) {
         self.model = model
@@ -63,6 +64,8 @@ class CBMoviesViewModel {
         print(uniqueGenresArray)
         model.append(Model(category: CBMovieCategory.genre.rawValue, subCategory: uniqueGenresArray, isOpened: false))
 
+        model.append(Model(category: CBMovieCategory.allMovies.rawValue, subCategory: [], isOpened: false))
+        
         array = model
     }
     

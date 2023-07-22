@@ -11,8 +11,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak private var moviesTypesTableView: UITableView!
+    
     let viewModel = CBMoviesViewModel(model: CBMoviesModel())
     var searchDispatchWorkItem: DispatchWorkItem?
+    
+    // MARK: - View life cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,8 @@ class ViewController: UIViewController {
         viewModel.getMoviesDetails()
         customiseUI()
     }
+    
+    // MARK: - Custom methods
     
     private func customiseUI() {
         searchTextField.leftView = configureSearchIcon()
@@ -38,8 +43,9 @@ class ViewController: UIViewController {
 
     
     @objc private func searchTextChanged() {
-        guard let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+        guard let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !searchText.isEmpty else {
             viewModel.isSearch = false
+            moviesTypesTableView.reloadData()
             return
         }
         viewModel.isSearch = true
@@ -58,13 +64,24 @@ class ViewController: UIViewController {
         searchDispatchWorkItem = requestWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: requestWorkItem) // We should not hit API at when user continously typing. We adding this delay to make user we are not hitting API too frequetly in this case. We need to hit API after `kMinimumTypingInterval`
     }
+    
+    private func moveToMovieDetailsViewController(movie: CBMovies?, posterImage: UIImage?) {
+        guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMovieDetailsViewController.self)) as? CBMovieDetailsViewController else { return }
+        viewController.movie = movie
+        viewController.movieImage = posterImage
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.array?[indexPath.section].isOpened?.toggle()
-        moviesTypesTableView.reloadSections([indexPath.section], with: .none)
+        if viewModel.isSearch {
+            moveToMovieDetailsViewController(movie: viewModel.searchedMovies?[indexPath.row], posterImage: UIImage())
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            viewModel.array?[indexPath.section].isOpened?.toggle()
+            moviesTypesTableView.reloadSections([indexPath.section], with: .none)
+        }
     }
 }
 
@@ -82,7 +99,11 @@ extension ViewController: UITableViewDataSource {
         } else {
             let section = viewModel.array?[section]
             if section?.isOpened == true {
-                return (section?.subCategory?.count ?? 0)
+                if section?.category == CBMovieCategory.allMovies.rawValue {
+                    return viewModel.moviesArray?.count ?? 0
+                } else {
+                    return (section?.subCategory?.count ?? 0)
+                }
             } else {
                 return 1
             }
@@ -90,16 +111,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.isSearch {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesTableViewCell.self), for: indexPath) as? MoviesTableViewCell else {
-                return UITableViewCell()
-            }
-            guard let movie = viewModel.searchedMovies?[indexPath.row] else {
-                return UITableViewCell()
-            }
-            cell.customUI(movie: movie)
-            return cell
-        } else {
+        if indexPath.row == 0 || indexPath.section != CBMovieCategory.allCases.count - 1 && !viewModel.isSearch {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesCategoryTableViewCell.self), for: indexPath) as? MoviesCategoryTableViewCell else {
                 return UITableViewCell()
             }
@@ -108,7 +120,29 @@ extension ViewController: UITableViewDataSource {
             } else {
                 cell.customise(categoryText: viewModel.array?[indexPath.section].subCategory?[indexPath.row])
             }
+            if viewModel.array?[indexPath.section].isOpened ?? false {
+                cell.expandButton.setImage(UIImage(systemName: "arrow.up.circle"), for: .normal)
+            } else {
+                cell.expandButton.setImage(UIImage(systemName: "arrow.down.circle"), for: .normal)
+            }
             return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesTableViewCell.self), for: indexPath) as? MoviesTableViewCell else {
+                return UITableViewCell()
+            }
+            guard let movie = (CBMovieCategory.allCases.count - 1) == indexPath.section ? viewModel.moviesArray?[indexPath.row]: viewModel.searchedMovies?[indexPath.row] else {
+                return UITableViewCell()
+            }
+            cell.customUI(movie: movie)
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if viewModel.isSearch || indexPath.section == CBMovieCategory.allCases.count - 1 && indexPath.row != 0 {
+            return 75
+        } else {
+            return 44
         }
     }
     
@@ -117,7 +151,7 @@ extension ViewController: UITableViewDataSource {
 func configureSearchIcon() -> UIView? {
     let imageView = UIImageView(frame: CGRect(x: 5, y: 10, width: 30, height: 20))
     imageView.image = UIImage(systemName: "magnifyingglass")
-    let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 55, height: 40))
+    let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 50, height: 40))
     imageContainerView.addSubview(imageView)
     return imageContainerView
 }

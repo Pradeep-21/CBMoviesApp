@@ -8,12 +8,18 @@
 import UIKit
 import AlamofireImage
 
+protocol MoviesTableViewCellDelegate {
+    func disTapMovie(movie: CBMovies)
+}
+
 class MoviesTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var title: UILabel!
     @IBOutlet weak private var language: UILabel!
     @IBOutlet weak private var posterImageView: UIImageView!
     @IBOutlet weak private var year: UILabel!
+    
+//    weak var delegate: MoviesTableViewCellDelegate?
     
     // MARK: - Init Methods
     
