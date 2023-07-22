@@ -10,6 +10,7 @@
 		813FF3912A6ACC21001D00B5 /* CBMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3902A6ACC20001D00B5 /* CBMoviesViewModel.swift */; };
 		813FF3942A6AE746001D00B5 /* MoviesCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3922A6AE745001D00B5 /* MoviesCategoryTableViewCell.swift */; };
 		813FF3952A6AE746001D00B5 /* MoviesCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 813FF3932A6AE745001D00B5 /* MoviesCategoryTableViewCell.xib */; };
+		813FF3982A6B842F001D00B5 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 813FF3972A6B842F001D00B5 /* AlamofireImage */; };
 		8165A0022A6AB50D00EC9A13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8165A0012A6AB50D00EC9A13 /* AppDelegate.swift */; };
 		8165A0042A6AB50D00EC9A13 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8165A0032A6AB50D00EC9A13 /* SceneDelegate.swift */; };
 		8165A0062A6AB50D00EC9A13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8165A0052A6AB50D00EC9A13 /* ViewController.swift */; };
@@ -72,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				813FF3982A6B842F001D00B5 /* AlamofireImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +217,9 @@
 			dependencies = (
 			);
 			name = CBMoviesApp;
+			packageProductDependencies = (
+				813FF3972A6B842F001D00B5 /* AlamofireImage */,
+			);
 			productName = CBMoviesApp;
 			productReference = 81659FFE2A6AB50D00EC9A13 /* CBMoviesApp.app */;
 			productType = "com.apple.product-type.application";
@@ -287,6 +292,9 @@
 				Base,
 			);
 			mainGroup = 81659FF52A6AB50D00EC9A13;
+			packageReferences = (
+				813FF3962A6B842F001D00B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+			);
 			productRefGroup = 81659FFF2A6AB50D00EC9A13 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -682,6 +690,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		813FF3962A6B842F001D00B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		813FF3972A6B842F001D00B5 /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 813FF3962A6B842F001D00B5 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8165A00A2A6AB50D00EC9A13 /* CBMoviesApp.xcdatamodeld */ = {

@@ -21,8 +21,9 @@ class CBMoviesViewModel {
     
     var model: CBMoviesModelProtocol?
     var moviesArray: [CBMovies]?
-//    var allMovies: [C]?
     var array: [Model]?
+    var searchedMovies: [CBMovies]?
+    var isSearch: Bool = false
     
     init(model: CBMoviesModelProtocol) {
         self.model = model
@@ -63,6 +64,21 @@ class CBMoviesViewModel {
         model.append(Model(category: CBMovieCategory.genre.rawValue, subCategory: uniqueGenresArray, isOpened: false))
 
         array = model
+    }
+    
+    func searchMovies(from searchText: String) {
+        searchedMovies = moviesArray?.filter({ movie in
+            let isTitleMatch = isStringContainingValue(movie.title ?? "", searchText)
+            let isGenreMatch = isStringContainingValue(movie.genre ?? "", searchText)
+            let isActorMatch = isStringContainingValue(movie.actors ?? "", searchText)
+            let isDirectedMatch = isStringContainingValue(movie.director ?? "", searchText)
+            return (isTitleMatch || isGenreMatch || isActorMatch || isDirectedMatch)
+        })
+    }
+    
+    func isStringContainingValue(_ targetString: String, _ desiredValue: String) -> Bool {
+        let components = targetString.components(separatedBy: ",")
+        return components.contains { $0.range(of: desiredValue, options: .caseInsensitive) != nil }
     }
 }
 

@@ -6,18 +6,38 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class MoviesTableViewCell: UITableViewCell {
 
+    @IBOutlet weak private var title: UILabel!
+    @IBOutlet weak private var language: UILabel!
+    @IBOutlet weak private var posterImageView: UIImageView!
+    @IBOutlet weak private var year: UILabel!
+    
+    // MARK: - Init Methods
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+    }
+    
+    // MARK: - Custom Methods
+    
+    func customUI(movie: CBMovies) {
+        title.text = movie.title
+        language.text = movie.language
+        year.text = movie.year
+        guard let imageUrlString = movie.poster, let imageUrl = URL(string: imageUrlString) else {
+            return
+        }
+        posterImageView.af.setImage(withURL: imageUrl)
     }
     
 }
