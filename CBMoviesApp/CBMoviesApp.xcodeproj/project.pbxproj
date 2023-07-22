@@ -15,7 +15,7 @@
 		813FF39C2A6B9018001D00B5 /* CBEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF39B2A6B9018001D00B5 /* CBEnum.swift */; };
 		813FF39E2A6BABDB001D00B5 /* CBMoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF39D2A6BABDB001D00B5 /* CBMoviesListViewController.swift */; };
 		813FF3A02A6BACE3001D00B5 /* CBMoviesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF39F2A6BACE3001D00B5 /* CBMoviesListViewModel.swift */; };
-		813FF3A22A6BB70B001D00B5 /* CBExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3A12A6BB70B001D00B5 /* CBExtention.swift */; };
+		813FF3A22A6BB70B001D00B5 /* CBExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3A12A6BB70B001D00B5 /* CBExtension.swift */; };
 		813FF3A42A6BC466001D00B5 /* CBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3A32A6BC466001D00B5 /* CBHelper.swift */; };
 		813FF3A62A6BCEA9001D00B5 /* CBObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3A52A6BCEA9001D00B5 /* CBObservable.swift */; };
 		813FF3AA2A6BDDF2001D00B5 /* CBConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813FF3A92A6BDDF2001D00B5 /* CBConstant.swift */; };
@@ -62,7 +62,7 @@
 		813FF39B2A6B9018001D00B5 /* CBEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBEnum.swift; sourceTree = "<group>"; };
 		813FF39D2A6BABDB001D00B5 /* CBMoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMoviesListViewController.swift; sourceTree = "<group>"; };
 		813FF39F2A6BACE3001D00B5 /* CBMoviesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBMoviesListViewModel.swift; sourceTree = "<group>"; };
-		813FF3A12A6BB70B001D00B5 /* CBExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBExtention.swift; sourceTree = "<group>"; };
+		813FF3A12A6BB70B001D00B5 /* CBExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBExtension.swift; sourceTree = "<group>"; };
 		813FF3A32A6BC466001D00B5 /* CBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBHelper.swift; sourceTree = "<group>"; };
 		813FF3A52A6BCEA9001D00B5 /* CBObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBObservable.swift; sourceTree = "<group>"; };
 		813FF3A92A6BDDF2001D00B5 /* CBConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBConstant.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			children = (
 				813FF39B2A6B9018001D00B5 /* CBEnum.swift */,
 				813FF3A92A6BDDF2001D00B5 /* CBConstant.swift */,
-				813FF3A12A6BB70B001D00B5 /* CBExtention.swift */,
+				813FF3A12A6BB70B001D00B5 /* CBExtension.swift */,
 				813FF3A32A6BC466001D00B5 /* CBHelper.swift */,
 				813FF3A52A6BCEA9001D00B5 /* CBObservable.swift */,
 			);
@@ -399,7 +399,7 @@
 				8164C2D92A6C1C6100156EC4 /* CBTextField.swift in Sources */,
 				813FF39A2A6B8E47001D00B5 /* CBMovieDetailsViewController.swift in Sources */,
 				8165A0022A6AB50D00EC9A13 /* AppDelegate.swift in Sources */,
-				813FF3A22A6BB70B001D00B5 /* CBExtention.swift in Sources */,
+				813FF3A22A6BB70B001D00B5 /* CBExtension.swift in Sources */,
 				813FF3AA2A6BDDF2001D00B5 /* CBConstant.swift in Sources */,
 				813FF3A42A6BC466001D00B5 /* CBHelper.swift in Sources */,
 				8165A0392A6AB58700EC9A13 /* CBMoviesModel.swift in Sources */,

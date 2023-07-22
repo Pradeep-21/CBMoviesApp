@@ -8,7 +8,13 @@
 import Foundation
 
 let kDefaultString = ""
+
+// MARK: - Constant Image views
+
 let kUpArrowImageString = "arrow.up.circle"
 let kDownArrowImageString = "arrow.down.circle"
+
+// MARK: - Table View constant
+
 let kTableViewMovieHeightConstant = 98.0
 let kTableTitleHeightConstant = 45.0

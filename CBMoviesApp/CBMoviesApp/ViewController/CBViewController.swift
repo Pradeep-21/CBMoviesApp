@@ -150,7 +150,7 @@ extension CBViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesCategoryTableViewCell.self), for: indexPath) as? CBMoviesCategoryTableViewCell else {
                 return UITableViewCell()
             }
-            cell.customise(movieSection: viewModel.movieSections.value?[indexPath.section], index: indexPath.row - 1, isSection: indexPath.row == 0)
+            cell.customise(movieSection: viewModel.movieSections.value?[indexPath.section], index: indexPath.row - 1, isTitle: indexPath.row == 0)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesTableViewCell.self), for: indexPath) as? CBMoviesTableViewCell else {

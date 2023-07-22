@@ -39,6 +39,14 @@ class CBHelper {
         return imageContainerView
     }
     
+    /**
+        Get the height of the label with using the below parameters.
+     - Parameters:
+        - name: label's text
+        - font: label's font
+        - width: width of the label
+     - Returns: - size of the label.
+     */
     class func getExactLabelHeight(for name: String, with font: UIFont, andLabelWidth width: CGFloat) -> CGFloat {
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
         let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]

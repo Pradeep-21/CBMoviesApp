@@ -27,8 +27,8 @@ class CBMoviesCategoryTableViewCell: UITableViewCell {
     
     // MARK: - Customise Mehtods
     
-    func customise(movieSection: MovieSection?, index: Int, isSection: Bool = false) {
-        if isSection {
+    func customise(movieSection: MovieSection?, index: Int, isTitle: Bool = false) {
+        if isTitle {
             categoryNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
             categoryNameLabel.text = movieSection?.category?.rawValue
             expandButton.isHidden = false

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 enum AppStoryboards : String {
    case Main = "Main"
     
@@ -19,7 +18,7 @@ enum AppStoryboards : String {
 enum CBMovieCategory: String, CaseIterable {
     case year = "Year"
     case genre = "Genre"
-    case directers = "Directers"
+    case directors = "Directors"
     case actors = "Actors"
     case allMovies = "All Movies"
 }

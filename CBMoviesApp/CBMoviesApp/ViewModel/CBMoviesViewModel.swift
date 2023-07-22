@@ -45,26 +45,23 @@ class CBMoviesViewModel {
         
         // Usage for genres
         let uniqueGenresArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.genre)
-        print(uniqueGenresArray)
         movies.append(MovieSection(category: CBMovieCategory.genre, subCategory: uniqueGenresArray, isOpened: false))
         
         // Usage for directors
         let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
-        movies.append(MovieSection(category: CBMovieCategory.directers, subCategory: uniqueDirectorsArray, isOpened: false))
-        print(uniqueDirectorsArray)
+        movies.append(MovieSection(category: CBMovieCategory.directors, subCategory: uniqueDirectorsArray, isOpened: false))
         
         // Usage for actors
         let uniqueActorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.actors)
-        print(uniqueActorsArray)
         movies.append(MovieSection(category: CBMovieCategory.actors, subCategory: uniqueActorsArray, isOpened: false))
         
-
         // Append the All Movies section also.
         movies.append(MovieSection(category: CBMovieCategory.allMovies, subCategory: [], isOpened: false))
         
         movieSections.value = movies
     }
     
+    // Filter the movies based on title/genre/actors, directors.
     func searchMovies(from searchText: String) {
         filteredMovies.value = allMovies?.filter({ movie in
             let isTitleMatch = CBHelper.isStringContainingValue(movie.title ?? kDefaultString, searchText)
@@ -75,6 +72,7 @@ class CBMoviesViewModel {
         })
     }
     
+    // Reset the value after the search completed.
     func resetSelectedSectionBool() {
         guard var tempArray = movieSections.value else { return }
         for index in 0..<tempArray.count {

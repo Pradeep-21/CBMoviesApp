@@ -19,7 +19,7 @@ class CBMoviesListViewModel {
                 return CBHelper.isStringContainingValue(movie.genre ?? kDefaultString, subCategory ?? kDefaultString)
             case .year:
                 return CBHelper.isStringContainingValue(movie.year ?? kDefaultString, subCategory ?? kDefaultString)
-            case .directers:
+            case .directors:
                 return CBHelper.isStringContainingValue(movie.director ?? kDefaultString, subCategory ?? kDefaultString)
             case .none: break
             case .some(_): break

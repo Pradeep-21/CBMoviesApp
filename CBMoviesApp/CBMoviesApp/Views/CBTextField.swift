@@ -9,6 +9,8 @@ import UIKit
 
 class CBTextField: UITextField {
 
+    // MARK: - Init Methods
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         customise()
@@ -19,12 +21,13 @@ class CBTextField: UITextField {
         customise()
     }
 
-    // Customise the placeholder text color
+    // MARK: - Custom Methods
+    
     func customise() {
         let placeholderText = "Search movies by title/actor/genre/directer.."
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.CCSearchTextTint, // Change this color to the desired color
-            .font: UIFont.systemFont(ofSize: 16) // Change the font size if needed
+            .foregroundColor: UIColor.CCSearchTextTint,
+            .font: UIFont.systemFont(ofSize: 16)
         ]
         let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
         
