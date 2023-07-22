@@ -71,16 +71,29 @@ class ViewController: UIViewController {
         viewController.movieImage = posterImage
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    private func moveToMoviesListViewController(subCategory: String?, text: String?) {
+        guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMoviesListViewController.self)) as? CBMoviesListViewController else { return }
+        viewController.subCategoryMovie = subCategory
+        viewController.text = text
+        viewController.allMovies = viewModel.moviesArray
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if viewModel.isSearch {
             moveToMovieDetailsViewController(movie: viewModel.searchedMovies?[indexPath.row], posterImage: UIImage())
+        } else if indexPath.row == 0 {
+            
+                tableView.deselectRow(at: indexPath, animated: true)
+                viewModel.array?[indexPath.section].isOpened?.toggle()
+                moviesTypesTableView.reloadSections([indexPath.section], with: .none)
         } else {
-            tableView.deselectRow(at: indexPath, animated: true)
-            viewModel.array?[indexPath.section].isOpened?.toggle()
-            moviesTypesTableView.reloadSections([indexPath.section], with: .none)
+            let text = viewModel.array?[indexPath.section].subCategory?[indexPath.row]
+            let category = viewModel.array?[indexPath.section].category
+            moveToMoviesListViewController(subCategory: category, text: text)
         }
     }
 }
@@ -111,7 +124,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 || indexPath.section != CBMovieCategory.allCases.count - 1 && !viewModel.isSearch {
+        if ((indexPath.row == 0 || indexPath.section != CBMovieCategory.allCases.count - 1) && !viewModel.isSearch) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesCategoryTableViewCell.self), for: indexPath) as? MoviesCategoryTableViewCell else {
                 return UITableViewCell()
             }
@@ -145,6 +158,10 @@ extension ViewController: UITableViewDataSource {
             return 44
         }
     }
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return CBMovieCategory.allCases[section].rawValue
+//    }
     
 }
 

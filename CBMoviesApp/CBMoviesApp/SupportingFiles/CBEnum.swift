@@ -19,7 +19,7 @@ enum AppStoryboards : String {
 enum CBMovieCategory: String, CaseIterable {
     case year = "Year"
     case genre = "Genre"
-    case directer = "directer"
+    case directer = "Directer"
     case actor = "Actor"
     case allMovies = "All Movies"
 }

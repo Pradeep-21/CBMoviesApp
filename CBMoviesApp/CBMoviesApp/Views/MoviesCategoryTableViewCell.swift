@@ -27,4 +27,8 @@ class MoviesCategoryTableViewCell: UITableViewCell {
         categoryNameLabel.text = categoryText
     }
     
+    private func updateSectionNameTextUI() {
+        categoryNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
+    }
+    
 }
