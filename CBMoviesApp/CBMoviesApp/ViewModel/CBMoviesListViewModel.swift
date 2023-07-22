@@ -13,14 +13,14 @@ class CBMoviesListViewModel {
     func fetchSubMovieList(from movies: [CBMovies]?, with selectedText: CBMovieCategory?, and subCategory: String?) {
         filteredMovies.value = movies?.filter({ movie in
             switch selectedText {
-            case .actor:
-                return CBHelper.isStringContainingValue(movie.actors ?? "", subCategory ?? "")
+            case .actors:
+                return CBHelper.isStringContainingValue(movie.actors ?? kDefaultString, subCategory ?? kDefaultString)
             case .genre:
-                return CBHelper.isStringContainingValue(movie.genre ?? "", subCategory ?? "")
+                return CBHelper.isStringContainingValue(movie.genre ?? kDefaultString, subCategory ?? kDefaultString)
             case .year:
-                return CBHelper.isStringContainingValue(movie.year ?? "", subCategory ?? "")
-            case .directer:
-                return CBHelper.isStringContainingValue(movie.director ?? "", subCategory ?? "")
+                return CBHelper.isStringContainingValue(movie.year ?? kDefaultString, subCategory ?? kDefaultString)
+            case .directers:
+                return CBHelper.isStringContainingValue(movie.director ?? kDefaultString, subCategory ?? kDefaultString)
             case .none: break
             case .some(_): break
             }

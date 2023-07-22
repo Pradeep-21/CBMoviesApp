@@ -36,7 +36,7 @@ class CBMoviesCategoryTableViewCell: UITableViewCell {
             accessoryType = .none
         } else {
             expandButton.isHidden = true
-            categoryNameLabel.text = "    - \(movieSection?.subCategory?[index] ?? "")"
+            categoryNameLabel.text = "    - \(movieSection?.subCategory?[index] ?? kDefaultString)"
             categoryNameLabel.font = UIFont.systemFont(ofSize: 17)
             accessoryType = .disclosureIndicator
         }

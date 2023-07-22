@@ -7,9 +7,6 @@
 
 import UIKit
 
-let kTableViewMovieHeightConstant = 75.0
-private let kTableTitleHeightConstant = 45.0
-
 class CBViewController: UIViewController {
     @IBOutlet weak private var emptyDataLabel: UILabel!
     @IBOutlet weak private var searchTextField: CBTextField!
@@ -82,7 +79,7 @@ class CBViewController: UIViewController {
         
         // Save the new work item and execute it after 250 ms
         searchDispatchWorkItem = requestWorkItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: requestWorkItem) // We should not hit API at when user continously typing. We adding this delay to make user we are not hitting API too frequetly in this case. We need to hit API after `kMinimumTypingInterval`
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: requestWorkItem) // We should not search at when user continuously typing. We adding this delay to make user we are not hitting search too frequently in this case. We need to search after `kMinimumTypingInterval`
     }
     
     private func moveToMovieDetailsViewController(movie: CBMovies?, posterImage: UIImage?) {
@@ -112,9 +109,9 @@ extension CBViewController: UITableViewDelegate {
             viewModel.movieSections.value?[indexPath.section].isOpened?.toggle()
             moviesTypesTableView.reloadSections([indexPath.section], with: .none)
         } else if indexPath.section == CBMovieCategory.allCases.count - 1 {
-            moveToMovieDetailsViewController(movie: viewModel.allMovies?[indexPath.row], posterImage: UIImage())
+            moveToMovieDetailsViewController(movie: viewModel.allMovies?[indexPath.row - 1], posterImage: UIImage())
         } else {
-            let subCategory = viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row]
+            let subCategory = viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row - 1]
             let category = viewModel.movieSections.value?[indexPath.section].category
             moveToMoviesListViewController(category: category, subCategory: subCategory)
         }
@@ -138,9 +135,9 @@ extension CBViewController: UITableViewDataSource {
             let section = viewModel.movieSections.value?[section]
             if section?.isOpened == true {
                 if section?.category == CBMovieCategory.allMovies {
-                    return viewModel.allMovies?.count ?? 0
+                    return (viewModel.allMovies?.count ?? 0) + 1 // + 1 for Title(Year, Genre,...)
                 } else {
-                    return section?.subCategory?.count ?? 0
+                    return (section?.subCategory?.count ?? 0) + 1 // + 1 for Title(Year, Genre,...)
                 }
             } else {
                 return 1
@@ -153,13 +150,13 @@ extension CBViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesCategoryTableViewCell.self), for: indexPath) as? CBMoviesCategoryTableViewCell else {
                 return UITableViewCell()
             }
-            cell.customise(movieSection: viewModel.movieSections.value?[indexPath.section], index: indexPath.row, isSection: indexPath.row == 0)
+            cell.customise(movieSection: viewModel.movieSections.value?[indexPath.section], index: indexPath.row - 1, isSection: indexPath.row == 0)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesTableViewCell.self), for: indexPath) as? CBMoviesTableViewCell else {
                 return UITableViewCell()
             }
-            guard let movie = indexPath.section == (CBMovieCategory.allCases.count - 1) ? viewModel.allMovies?[indexPath.row]: viewModel.filteredMovies.value?[indexPath.row] else {
+            guard let movie = indexPath.section == (CBMovieCategory.allCases.count - 1) ? viewModel.allMovies?[indexPath.row - 1]: viewModel.filteredMovies.value?[indexPath.row] else {
                 return UITableViewCell()
             }
             cell.customUI(movie: movie)

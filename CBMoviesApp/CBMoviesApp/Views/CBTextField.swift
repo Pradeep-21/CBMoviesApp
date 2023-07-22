@@ -21,7 +21,7 @@ class CBTextField: UITextField {
 
     // Customise the placeholder text color
     func customise() {
-        let placeholderText = "Search"
+        let placeholderText = "Search movies by title/actor/genre/directer.."
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.CCSearchTextTint, // Change this color to the desired color
             .font: UIFont.systemFont(ofSize: 16) // Change the font size if needed

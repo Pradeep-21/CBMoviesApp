@@ -36,7 +36,7 @@ class CBMoviesViewModel {
         var years = [String]()
         
         allMovies.forEach { movie in
-            years.append(movie.year ?? "")
+            years.append(movie.year ?? kDefaultString)
         }
         years = Array(Set(years))
         
@@ -48,15 +48,16 @@ class CBMoviesViewModel {
         print(uniqueGenresArray)
         movies.append(MovieSection(category: CBMovieCategory.genre, subCategory: uniqueGenresArray, isOpened: false))
         
+        // Usage for directors
+        let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
+        movies.append(MovieSection(category: CBMovieCategory.directers, subCategory: uniqueDirectorsArray, isOpened: false))
+        print(uniqueDirectorsArray)
+        
         // Usage for actors
         let uniqueActorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.actors)
         print(uniqueActorsArray)
-        movies.append(MovieSection(category: CBMovieCategory.actor, subCategory: uniqueActorsArray, isOpened: false))
+        movies.append(MovieSection(category: CBMovieCategory.actors, subCategory: uniqueActorsArray, isOpened: false))
         
-        // Usage for directors
-        let uniqueDirectorsArray: [String] = CBHelper.extractUniqueValues(from: allMovies, keyPath: \.director)
-        movies.append(MovieSection(category: CBMovieCategory.directer, subCategory: uniqueDirectorsArray, isOpened: false))
-        print(uniqueDirectorsArray)
 
         // Append the All Movies section also.
         movies.append(MovieSection(category: CBMovieCategory.allMovies, subCategory: [], isOpened: false))
@@ -66,10 +67,10 @@ class CBMoviesViewModel {
     
     func searchMovies(from searchText: String) {
         filteredMovies.value = allMovies?.filter({ movie in
-            let isTitleMatch = CBHelper.isStringContainingValue(movie.title ?? "", searchText)
-            let isGenreMatch = CBHelper.isStringContainingValue(movie.genre ?? "", searchText)
-            let isActorMatch = CBHelper.isStringContainingValue(movie.actors ?? "", searchText)
-            let isDirectedMatch = CBHelper.isStringContainingValue(movie.director ?? "", searchText)
+            let isTitleMatch = CBHelper.isStringContainingValue(movie.title ?? kDefaultString, searchText)
+            let isGenreMatch = CBHelper.isStringContainingValue(movie.genre ?? kDefaultString, searchText)
+            let isActorMatch = CBHelper.isStringContainingValue(movie.actors ?? kDefaultString, searchText)
+            let isDirectedMatch = CBHelper.isStringContainingValue(movie.director ?? kDefaultString, searchText)
             return (isTitleMatch || isGenreMatch || isActorMatch || isDirectedMatch)
         })
     }

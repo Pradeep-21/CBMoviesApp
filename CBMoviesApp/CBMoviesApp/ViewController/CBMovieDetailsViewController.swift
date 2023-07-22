@@ -51,7 +51,7 @@ class CBMovieDetailsViewController: UIViewController {
         castCrew.text = castAndCrewString
         
         // Get plot text height based on content, size and width. Then change the content view height.
-        let height = CBHelper.getExactLabelHeight(for: movie?.plot ?? "", with: UIFont.systemFont(ofSize: 17), andLabelWidth: UIScreen.main.bounds.width - 20)
+        let height = CBHelper.getExactLabelHeight(for: movie?.plot ?? kDefaultString, with: UIFont.systemFont(ofSize: 17), andLabelWidth: UIScreen.main.bounds.width - 20)
         contentViewHeightConstraint.constant = height - 80
         
         // Update the poster Image
