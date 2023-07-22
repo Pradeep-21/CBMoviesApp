@@ -29,10 +29,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cKC-Et-A1u">
                                 <rect key="frame" x="0.0" y="103" width="393" height="60"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JLH-pY-YH9">
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JLH-pY-YH9" customClass="CBTextField" customModule="CBMoviesApp" customModuleProvider="target">
                                         <rect key="frame" x="8" y="10" width="377" height="40"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
@@ -92,7 +92,7 @@
                     <connections>
                         <outlet property="emptyDataLabel" destination="zVh-c8-jPg" id="UjT-eY-quZ"/>
                         <outlet property="moviesTypesTableView" destination="gi1-5f-4Op" id="Fap-Yc-NIU"/>
-                        <outlet property="searchTextField" destination="JLH-pY-YH9" id="eUg-Kh-wld"/>
+                        <outlet property="searchTextField" destination="JLH-pY-YH9" id="fHg-Ru-HR9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -183,6 +183,7 @@
                                                 <rect key="frame" x="10" y="380.66666666666669" width="54" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="I8s-qV-p5V"/>
+                                                    <constraint firstAttribute="width" constant="54" id="Vqd-Jp-F4t"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>

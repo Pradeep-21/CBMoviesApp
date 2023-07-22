@@ -12,7 +12,7 @@ private let kTableTitleHeightConstant = 45.0
 
 class CBViewController: UIViewController {
     @IBOutlet weak private var emptyDataLabel: UILabel!
-    @IBOutlet weak private var searchTextField: UITextField!
+    @IBOutlet weak private var searchTextField: CBTextField!
     @IBOutlet weak private var moviesTypesTableView: UITableView!
     
     let viewModel = CBMoviesViewModel(model: CBMoviesModel())

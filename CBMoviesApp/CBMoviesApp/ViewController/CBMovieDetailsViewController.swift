@@ -50,8 +50,9 @@ class CBMovieDetailsViewController: UIViewController {
         let castAndCrewString = viewModel.fetchCastAndCrew(movie: movie).joined(separator: ", ")
         castCrew.text = castAndCrewString
         
-        let height = getExactLabelHeight(for: movie?.plot ?? "", with: UIFont.systemFont(ofSize: 12), andLabelWidth: UIScreen.main.bounds.width)
-//        contentViewHeightConstraint.constant = height + 50
+        // Get plot text height based on content, size and width. Then change the content view height.
+        let height = CBHelper.getExactLabelHeight(for: movie?.plot ?? "", with: UIFont.systemFont(ofSize: 17), andLabelWidth: UIScreen.main.bounds.width - 20)
+        contentViewHeightConstraint.constant = height - 80
         
         // Update the poster Image
         guard let imageUrlString = movie?.poster, let imageUrl = URL(string: imageUrlString) else {
@@ -69,14 +70,5 @@ class CBMovieDetailsViewController: UIViewController {
         for (index, rating) in ratings.enumerated() {
             ratingSegmentedControl.insertSegment(withTitle: rating.value, at: index, animated: false)
         }
-    }
-    
-    func getExactLabelHeight(for name: String, with font: UIFont, andLabelWidth width: CGFloat) -> CGFloat {
-        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
-        let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
-
-        let rect = NSString(string: name).boundingRect(with: size, options: options, attributes: attributes, context: nil)
-        return rect.height
     }
 }

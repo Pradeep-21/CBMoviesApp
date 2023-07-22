@@ -38,4 +38,13 @@ class CBHelper {
         imageContainerView.addSubview(imageView)
         return imageContainerView
     }
+    
+    class func getExactLabelHeight(for name: String, with font: UIFont, andLabelWidth width: CGFloat) -> CGFloat {
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+        let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
+
+        let rect = NSString(string: name).boundingRect(with: size, options: options, attributes: attributes, context: nil)
+        return rect.height
+    }
 }
