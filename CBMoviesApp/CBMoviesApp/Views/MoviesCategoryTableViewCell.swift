@@ -12,23 +12,30 @@ class MoviesCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak private var categoryNameLabel: UILabel!
     
+    // MARK: - Init Methods
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        expandButton.tintColor = .gray
+        categoryNameLabel.textColor = .darkGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func customise(categoryText: String?) {
-        categoryNameLabel.text = categoryText
-    }
+    // MARK: - Customise Mehtods
     
-    private func updateSectionNameTextUI() {
-        categoryNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
+    func customise(categoryText: String?, isSection: Bool = false) {
+        if isSection {
+            categoryNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
+            categoryNameLabel.text = categoryText
+            expandButton.isHidden = false
+        } else {
+            expandButton.isHidden = true
+            categoryNameLabel.text = "    - \(categoryText ?? "")"
+            categoryNameLabel.font = UIFont.systemFont(ofSize: 17)
+        }
     }
     
 }

@@ -122,10 +122,6 @@ class CBMoviesModel: CBMoviesModelProtocol {
             let decoder = JSONDecoder()
             let movies = try decoder.decode([CBMovies].self, from: jsonData)
             // Now, you have the JSON data deserialized into the 'movie' instance of your model class.
-            print("Movie Title: \(movies.first?.title)")
-            print("Year: \(movies.first?.year)")
-            print("Director: \(movies.first?.director)")
-            // Access other properties as needed.
             return movies
         } catch {
             fatalError("Error decoding JSON data: \(error)")

@@ -32,6 +32,8 @@ class ViewController: UIViewController {
         searchTextField.layer.cornerRadius = 10
         searchTextField.tintColor = .lightText
         searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
+        searchTextField.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 240 / 255, alpha: 1)
+        searchTextField.tintColor = UIColor(red: 149 / 255, green: 149 / 255, blue: 152 / 255, alpha: 1)
     }
     
     private func registerNibCell() {
@@ -86,10 +88,11 @@ extension ViewController: UITableViewDelegate {
         if viewModel.isSearch {
             moveToMovieDetailsViewController(movie: viewModel.searchedMovies?[indexPath.row], posterImage: UIImage())
         } else if indexPath.row == 0 {
-            
                 tableView.deselectRow(at: indexPath, animated: true)
                 viewModel.array?[indexPath.section].isOpened?.toggle()
                 moviesTypesTableView.reloadSections([indexPath.section], with: .none)
+        } else if indexPath.section == (viewModel.array?.count ?? 0) - 1 {
+            moveToMovieDetailsViewController(movie: viewModel.moviesArray?[indexPath.row], posterImage: UIImage())
         } else {
             let text = viewModel.array?[indexPath.section].subCategory?[indexPath.row]
             let category = viewModel.array?[indexPath.section].category
@@ -129,7 +132,7 @@ extension ViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             if indexPath.row == 0 {
-                cell.customise(categoryText: viewModel.array?[indexPath.section].category)
+                cell.customise(categoryText: viewModel.array?[indexPath.section].category, isSection: true)
             } else {
                 cell.customise(categoryText: viewModel.array?[indexPath.section].subCategory?[indexPath.row])
             }
@@ -158,17 +161,13 @@ extension ViewController: UITableViewDataSource {
             return 44
         }
     }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return CBMovieCategory.allCases[section].rawValue
-//    }
-    
 }
 
 func configureSearchIcon() -> UIView? {
     let imageView = UIImageView(frame: CGRect(x: 5, y: 10, width: 30, height: 20))
     imageView.image = UIImage(systemName: "magnifyingglass")
-    let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 50, height: 40))
+    let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0,width: 40, height: 40))
+    imageView.tintColor = .gray
     imageContainerView.addSubview(imageView)
     return imageContainerView
 }

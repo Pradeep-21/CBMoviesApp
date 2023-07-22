@@ -39,7 +39,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tamil, Engilsh, Thai, Spanish, Tamil, Engilsh, Thai, Spanish" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-Mg-BJp">
-                                <rect key="frame" x="143.33333333333337" y="30" width="168.66666666666663" height="19.333333333333329"/>
+                                <rect key="frame" x="143.33333333333337" y="32" width="168.66666666666663" height="19.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                             <constraint firstItem="iH1-Gm-gEe" firstAttribute="top" secondItem="kk0-Wy-mHD" secondAttribute="top" constant="3" id="CCD-er-XL2"/>
                             <constraint firstItem="wfs-wj-yeC" firstAttribute="top" secondItem="mSa-xZ-POI" secondAttribute="bottom" constant="4" id="DmI-Yg-eKI"/>
                             <constraint firstItem="mSa-xZ-POI" firstAttribute="top" secondItem="kk0-Wy-mHD" secondAttribute="top" constant="5" id="Fxn-R4-6O1"/>
-                            <constraint firstItem="gDN-Mg-BJp" firstAttribute="top" secondItem="wfs-wj-yeC" secondAttribute="top" id="JEr-J0-xaY"/>
+                            <constraint firstItem="gDN-Mg-BJp" firstAttribute="top" secondItem="wfs-wj-yeC" secondAttribute="top" constant="2" id="JEr-J0-xaY"/>
                             <constraint firstItem="mSa-xZ-POI" firstAttribute="leading" secondItem="iH1-Gm-gEe" secondAttribute="trailing" constant="15" id="JlP-E2-lcb"/>
                             <constraint firstItem="wfs-wj-yeC" firstAttribute="leading" secondItem="mSa-xZ-POI" secondAttribute="leading" id="SvZ-QU-1Ez"/>
                             <constraint firstItem="2g3-pl-zgx" firstAttribute="top" secondItem="4cN-cS-0ej" secondAttribute="top" id="heK-SM-H1T"/>

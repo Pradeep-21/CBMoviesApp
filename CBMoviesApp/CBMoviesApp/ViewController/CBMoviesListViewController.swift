@@ -19,6 +19,7 @@ class CBMoviesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = subCategoryMovie?.capitalized
         registerNibCell()
         viewModel.fetchSubMovieList(from: allMovies, with: subCategoryMovie, text: text)
         moviesListTableView.reloadData()
@@ -55,5 +56,9 @@ extension CBMoviesListViewController: UITableViewDataSource {
 }
 
 extension CBMoviesListViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMovieDetailsViewController.self)) as? CBMovieDetailsViewController else { return }
+        viewController.movie = viewModel.searchedMovies?[indexPath.row]
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }

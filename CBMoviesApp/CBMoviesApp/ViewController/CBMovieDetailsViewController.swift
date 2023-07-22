@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class CBMovieDetailsViewController: UIViewController {
 
@@ -23,6 +24,7 @@ class CBMovieDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customiseUI()
+//        title =
     }
 
     // MARK: - Custom methods
@@ -31,6 +33,14 @@ class CBMovieDetailsViewController: UIViewController {
         movieTitle.text = movie?.title
         releasedDate.text = movie?.released
         genre.text = movie?.genre
-        posterImageView.image = movieImage
+        plot.text = movie?.plot
+        
+        guard let imageUrlString = movie?.poster, let imageUrl = URL(string: imageUrlString) else {
+            // If imageURL is nil, set the default placeholder image.
+            posterImageView.image = CBHelper.defaultImage()
+            return
+        }
+        // Use AlamofireImage to fetch and set the image from the URL.
+        posterImageView.af.setImage(withURL: imageUrl, placeholderImage: CBHelper.defaultImage())
     }
 }
