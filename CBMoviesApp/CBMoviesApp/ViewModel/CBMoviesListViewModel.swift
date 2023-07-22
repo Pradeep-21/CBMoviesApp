@@ -8,19 +8,19 @@
 import Foundation
 
 class CBMoviesListViewModel {
-    var filteredMovies: [CBMovies]?
+    var filteredMovies = CCObservable<[CBMovies]>()
     
-    func fetchSubMovieList(from movies: [CBMovies]?, with selectedText: String?, text: String?) {
-        filteredMovies = movies?.filter({ movie in
+    func fetchSubMovieList(from movies: [CBMovies]?, with selectedText: CBMovieCategory?, and subCategory: String?) {
+        filteredMovies.value = movies?.filter({ movie in
             switch selectedText {
-            case "Actor":
-                return CBHelper.isStringContainingValue(movie.actors ?? "", text ?? "")
-            case "Genre":
-                return CBHelper.isStringContainingValue(movie.genre ?? "", text ?? "")
-            case "Year":
-                return CBHelper.isStringContainingValue(movie.year ?? "", text ?? "")
-            case "Directer":
-                return CBHelper.isStringContainingValue(movie.director ?? "", text ?? "")
+            case .actor:
+                return CBHelper.isStringContainingValue(movie.actors ?? "", subCategory ?? "")
+            case .genre:
+                return CBHelper.isStringContainingValue(movie.genre ?? "", subCategory ?? "")
+            case .year:
+                return CBHelper.isStringContainingValue(movie.year ?? "", subCategory ?? "")
+            case .directer:
+                return CBHelper.isStringContainingValue(movie.director ?? "", subCategory ?? "")
             case .none: break
             case .some(_): break
             }

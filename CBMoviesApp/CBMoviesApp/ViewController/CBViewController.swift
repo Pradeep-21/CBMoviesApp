@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CBViewController.swift
 //  CBMoviesApp
 //
 //  Created by Pradeep Selvaraj on 21/07/23.
@@ -7,8 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+let kTableViewMovieHeightConstant = 75.0
+private let kTableTitleHeightConstant = 45.0
 
+class CBViewController: UIViewController {
     @IBOutlet weak private var emptyDataLabel: UILabel!
     @IBOutlet weak private var searchTextField: UITextField!
     @IBOutlet weak private var moviesTypesTableView: UITableView!
@@ -54,8 +56,8 @@ class ViewController: UIViewController {
     }
     
     private func registerNibCell() {
-        moviesTypesTableView.register(UINib(nibName: String(describing: MoviesTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: MoviesTableViewCell.self))
-        moviesTypesTableView.register(UINib(nibName: String(describing: MoviesCategoryTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: MoviesCategoryTableViewCell.self))
+        moviesTypesTableView.register(UINib(nibName: String(describing: CBMoviesTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: CBMoviesTableViewCell.self))
+        moviesTypesTableView.register(UINib(nibName: String(describing: CBMoviesCategoryTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: CBMoviesCategoryTableViewCell.self))
         moviesTypesTableView.delegate = self
         moviesTypesTableView.dataSource = self
     }
@@ -63,8 +65,7 @@ class ViewController: UIViewController {
     
     @objc private func searchTextChanged() {
         guard let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !searchText.isEmpty else {
-            viewModel.isSearch = false
-            moviesTypesTableView.reloadData()
+            viewModel.resetSelectedSectionBool()
             return
         }
         viewModel.isSearch = true
@@ -91,34 +92,38 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    private func moveToMoviesListViewController(subCategory: String?, text: String?) {
+    private func moveToMoviesListViewController(category: CBMovieCategory?, subCategory: String?) {
         guard let viewController = AppStoryboards.Main.instance.instantiateViewController(withIdentifier: String(describing: CBMoviesListViewController.self)) as? CBMoviesListViewController else { return }
-        viewController.subCategoryMovie = subCategory
-        viewController.text = text
+        viewController.category = category
+        viewController.subCategory = subCategory
         viewController.allMovies = viewModel.allMovies
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
-extension ViewController: UITableViewDelegate {
+// MARK: - UITableViewDelegate Methods
+
+extension CBViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if viewModel.isSearch {
             moveToMovieDetailsViewController(movie: viewModel.filteredMovies.value?[indexPath.row], posterImage: UIImage())
         } else if indexPath.row == 0 {
-                tableView.deselectRow(at: indexPath, animated: true)
             viewModel.movieSections.value?[indexPath.section].isOpened?.toggle()
-                moviesTypesTableView.reloadSections([indexPath.section], with: .none)
-        } else if indexPath.section == (viewModel.movieSections.value?.count ?? 0) - 1 {
+            moviesTypesTableView.reloadSections([indexPath.section], with: .none)
+        } else if indexPath.section == CBMovieCategory.allCases.count - 1 {
             moveToMovieDetailsViewController(movie: viewModel.allMovies?[indexPath.row], posterImage: UIImage())
         } else {
-            let text = viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row]
+            let subCategory = viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row]
             let category = viewModel.movieSections.value?[indexPath.section].category
-            moveToMoviesListViewController(subCategory: category, text: text)
+            moveToMoviesListViewController(category: category, subCategory: subCategory)
         }
     }
 }
 
-extension ViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource Methods
+
+extension CBViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if viewModel.isSearch {
             return 1
@@ -132,10 +137,10 @@ extension ViewController: UITableViewDataSource {
         } else {
             let section = viewModel.movieSections.value?[section]
             if section?.isOpened == true {
-                if section?.category == CBMovieCategory.allMovies.rawValue {
+                if section?.category == CBMovieCategory.allMovies {
                     return viewModel.allMovies?.count ?? 0
                 } else {
-                    return (section?.subCategory?.count ?? 0)
+                    return section?.subCategory?.count ?? 0
                 }
             } else {
                 return 1
@@ -145,25 +150,16 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if ((indexPath.row == 0 || indexPath.section != CBMovieCategory.allCases.count - 1) && !viewModel.isSearch) {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesCategoryTableViewCell.self), for: indexPath) as? MoviesCategoryTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesCategoryTableViewCell.self), for: indexPath) as? CBMoviesCategoryTableViewCell else {
                 return UITableViewCell()
             }
-            if indexPath.row == 0 {
-                cell.customise(categoryText: viewModel.movieSections.value?[indexPath.section].category, isSection: true)
-            } else {
-                cell.customise(categoryText: viewModel.movieSections.value?[indexPath.section].subCategory?[indexPath.row])
-            }
-            if viewModel.movieSections.value?[indexPath.section].isOpened ?? false {
-                cell.expandButton.setImage(UIImage(systemName: "arrow.up.circle"), for: .normal)
-            } else {
-                cell.expandButton.setImage(UIImage(systemName: "arrow.down.circle"), for: .normal)
-            }
+            cell.customise(movieSection: viewModel.movieSections.value?[indexPath.section], index: indexPath.row, isSection: indexPath.row == 0)
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MoviesTableViewCell.self), for: indexPath) as? MoviesTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CBMoviesTableViewCell.self), for: indexPath) as? CBMoviesTableViewCell else {
                 return UITableViewCell()
             }
-            guard let movie = (CBMovieCategory.allCases.count - 1) == indexPath.section ? viewModel.allMovies?[indexPath.row]: viewModel.filteredMovies.value?[indexPath.row] else {
+            guard let movie = indexPath.section == (CBMovieCategory.allCases.count - 1) ? viewModel.allMovies?[indexPath.row]: viewModel.filteredMovies.value?[indexPath.row] else {
                 return UITableViewCell()
             }
             cell.customUI(movie: movie)
@@ -173,9 +169,9 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if viewModel.isSearch || indexPath.section == CBMovieCategory.allCases.count - 1 && indexPath.row != 0 {
-            return 75
+            return kTableViewMovieHeightConstant
         } else {
-            return 44
+            return kTableTitleHeightConstant
         }
     }
 }

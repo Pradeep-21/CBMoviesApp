@@ -60,6 +60,7 @@ enum DVD: String, Codable {
 }
 
 // MARK: - Rating
+
 struct Rating: Codable {
     let source: Source
     let value: String
@@ -85,7 +86,19 @@ enum TypeEnum: String, Codable {
     case series = "series"
 }
 
-// MARK: - Class Model
+// MARK: - Movies Section Model
+
+struct MovieSection {
+    var category: CBMovieCategory?
+    var subCategory: [String]?
+    var isOpened: Bool?
+}
+
+// MARK: - Class Methods & Properties
+
+protocol CBMoviesModelProtocol {
+    func getMoviesDetails() -> [CBMovies]?
+}
 
 class CBMoviesModel: CBMoviesModelProtocol {
     

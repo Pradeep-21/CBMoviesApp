@@ -1,5 +1,5 @@
 //
-//  MoviesTableViewCell.swift
+//  CBMoviesTableViewCell.swift
 //  CBMoviesApp
 //
 //  Created by Pradeep Selvaraj on 21/07/23.
@@ -8,7 +8,7 @@
 import UIKit
 import AlamofireImage
 
-class MoviesTableViewCell: UITableViewCell {
+class CBMoviesTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var title: UILabel!
     @IBOutlet weak private var language: UILabel!
@@ -19,6 +19,7 @@ class MoviesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,6 +39,7 @@ class MoviesTableViewCell: UITableViewCell {
         }
         // Use AlamofireImage to fetch and set the image from the URL.
         posterImageView.af.setImage(withURL: imageUrl, placeholderImage: CBHelper.defaultImage())
+        accessoryType = .disclosureIndicator
     }
     
 }
