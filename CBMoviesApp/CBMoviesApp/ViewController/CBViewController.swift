@@ -43,6 +43,12 @@ class CBViewController: UIViewController {
             self.emptyDataLabel.isHidden = !(movie?.isEmpty ?? true)
             self.reloadTableView()
         }
+        
+        viewModel.filteredMovies.bind { [weak self] movies in
+            guard let self else { return }
+            self.emptyDataLabel.isHidden = !(movies?.isEmpty ?? true)
+            self.reloadTableView()
+        }
     }
     
     private func reloadTableView() {
@@ -74,7 +80,6 @@ class CBViewController: UIViewController {
         let requestWorkItem = DispatchWorkItem { [weak self] in
             guard let self else { return }
             self.viewModel.searchMovies(from: searchText)
-            self.moviesTypesTableView.reloadData()
         }
         
         // Save the new work item and execute it after 250 ms

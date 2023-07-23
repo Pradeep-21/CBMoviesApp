@@ -79,6 +79,7 @@ class CBMoviesViewModel {
             tempArray[index].isOpened = false
         }
         isSearch = false
+        filteredMovies.value = []
         movieSections.value = tempArray
     }
 }
