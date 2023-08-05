@@ -60,7 +60,7 @@ struct MovieSection {
 
 // MARK: - Class Methods & Properties
 
-protocol CBMoviesModelProtocol {
+protocol CBMoviesModelProtocol { // Abstraction -> for the use loosely coupling.
     func getMoviesDetails() -> [CBMovies]?
 }
 
