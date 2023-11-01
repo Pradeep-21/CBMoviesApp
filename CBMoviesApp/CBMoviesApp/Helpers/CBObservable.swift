@@ -37,6 +37,7 @@ class CCObservable<Value>: CCBindingProtocol {
     typealias Listener = (ValueType?) -> Void
     
     var listener: Listener?
+    
     var value: Value? {
         didSet {
             listener?(value)
