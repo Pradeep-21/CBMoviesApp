@@ -8,11 +8,13 @@
 import UIKit
 
 extension UIColor {
+    
     class var CBSearchTextBackground: UIColor {
         return UIColor(red: 239 / 255, green: 239 / 255, blue: 240 / 255, alpha: 1)
     }
 
-    class var CCSearchTextTint: UIColor {
+    class var CBSearchTextTint: UIColor {
         return UIColor(red: 149 / 255, green: 149 / 255, blue: 152 / 255, alpha: 1)
     }
+    
 }
