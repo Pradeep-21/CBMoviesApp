@@ -59,4 +59,5 @@ class CCObservable<Value>: CCBindingProtocol {
         self.listener = listener
         listener?(value)
     }
+    
 }
