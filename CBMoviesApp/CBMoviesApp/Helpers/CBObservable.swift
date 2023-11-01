@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CCBindingProtocol {
+protocol CBBindingProtocol {
     associatedtype ValueType
     associatedtype Listener
     
@@ -32,7 +32,7 @@ protocol CCBindingProtocol {
     func bindAndFire(_ listener: ((ValueType?) -> Void)?)
 }
 
-class CCObservable<Value>: CCBindingProtocol {
+class CBObservable<Value>: CBBindingProtocol {
     typealias ValueType = Value
     typealias Listener = (ValueType?) -> Void
     
